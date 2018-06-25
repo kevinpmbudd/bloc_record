@@ -1,0 +1,52 @@
+1. A gem can be a library or in other words a "self-contained" piece of
+software that encapsulates some functionality. Gems are pre made tools that
+instead of re-inventing the wheel allow developers to code, share and then use
+working solutions to what are possibly common problems. Devise is a rails
+gem for user authentication in a web app. The problem of how to authenticate
+users has been encountered many times before. A general idea of how to solve
+this problem has developed. Devise allows developers to not have to re-solve
+this problem and focus on other parts of their software.
+
+2. Lazy loading is when a value is not initialized until it is actually called
+for. Eager loading will initialize the value of a variable when an object is
+created. Lazy loading is helpful because until a value is actually needed the
+program will not spend any resources coming up with the value. This can be of
+use if a value is rarely needed and so the memory won't be wasted until it is
+actually required.
+
+3. A CREATE TABLE statement will create a new table. CREATE TABLE accepts the
+name of the table and the table schema as its 'parameters.' When a table is
+created with CREATE TABLE no data is loaded into the columns of the table.
+INSERT INTO accepts the name of a table, the names of columns and the values to
+be inserted into the columns of that table. It is when SQL loads data into a
+table.
+
+4. Include adds methods to the instance of a class. Extend adds methods to a
+class. If we wanted an instance of a class to have methods we would include
+that module. If we want to be able to call a method without having an instance
+of that class around we can extend the module and call the method on the class
+itself.
+
+5. When we want to save the state of an address book in our database we are
+working with an instance of AddressBook and not the class. So we need to call
+the save method on that instance of the class.
+
+6. UPDATE characters
+   SET star_rating = 1
+   WHERE character_name = 'Jar-Jar Binks';
+
+7. We need to define a relationship between an Address Book and its entries.
+Currently entries are storing a FK for the Address Book they belong to but an
+Address Book has no was of looking at the Entry table and pulling up its
+entries. We will need to create a method for an Address Book to query the
+Entries table.
+
+8. def camel(snake_case)
+     string = snake_case.gsub(/_/,'\1 \2')
+     string.gsub!(/\b('?[a-z])/) { $1.capitalize }
+     string.gsub!(/ /,'\1\2')
+   end
+
+9. def find_by(attribute, value)
+     connection.execute( "SELECT * FROM #{table} WHERE #{attribute} = #{value}" )
+   end
