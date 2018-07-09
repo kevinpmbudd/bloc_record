@@ -8,8 +8,7 @@ Gem::Specification.new do |s|
   s.email         = 'kevinpmbudd@gmail.com'
   s.files         = Dir['lib/**/*.rb']
   s.require_paths = ["lib"]
-  s.homepage      =
-   'http://rubygems.org/gems/bloc_record'
+  s.homepage      = 'http://rubygems.org/gems/bloc_record'
   s.license       = 'MIT'
   s.add_runtime_dependency 'sqlite3', '~> 1.3'
 end

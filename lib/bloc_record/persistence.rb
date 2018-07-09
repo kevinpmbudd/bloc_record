@@ -9,7 +9,7 @@ module Persistence
 
   def save
     self.save! rescue false
-  end 
+  end
 
   def save!
     unless self.id
