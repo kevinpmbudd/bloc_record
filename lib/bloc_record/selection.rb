@@ -143,7 +143,32 @@ module Selection
 
   def order(*args)
     if args.count > 1
-      order = args.join(",")
+      order = []
+      args.each_with_index do |arg, index|
+        case arg
+        when String
+          if arg.downcase.include?('asc')
+            order << arg.downcase.gsub(/asc/, 'order by asc')
+          elsif arg.downcase.include?('desc')
+            order << arg.downcase.gsub(/desc/, 'order by desc')
+          else
+            order << arg
+          end
+        when Hash
+          order << arg.keys.first.to_s
+          value = arg.values.first.to_s.downcase
+          if value.include?('asc')
+            order << value.gsub(/asc/, 'order by asc')
+          elsif value.include?('desc')
+            order << value.gsub(/desc/, 'order by desc')
+          else
+            order << value
+          end
+        when Symbol
+          order << arg.to_s
+        end
+      end
+      order = order.join(', ')
     else
       order = args.first.to_s
     end
@@ -166,12 +191,18 @@ module Selection
       case args.first
       when String
         rows = connection.execute <<-SQL
-          SELECT * FROM #{table} #{BlocRecord::Utility.sql_strings(arg)};
+          SELECT * FROM #{table} #{BlocRecord::Utility.sql_strings(args.first)};
         SQL
       when Symbol
         rows = connection.execute <<-SQL
           SELECT * FROM #{table}
-          INNER JOIN #{arg} ON #{arg}.#{table}_id = #{table}.id
+          INNER JOIN #{args.first} ON #{args.first}.#{table}_id = #{table}.id
+        SQL
+      when Hash
+        rows = connection.execute <<-SQL
+          SELECT * FROM #{table}
+          INNER JOIN #{BlocRecord::Utility.underscore(args.keys.first)} ON #{BlocRecord::Utility.underscore(args.keys.first)}.#{table}_id = #{table}.id
+          INNER JOIN #{BlocRecord::Utility.underscore(args.values.first)} ON #{BlocRecord::Utility.underscore(args.values.first)}.#{BlocRecord::Utility.underscore(args.keys.first)}_id = #{BlocRecord::Utility.underscore(args.keys.first)}.id
         SQL
       end
     end

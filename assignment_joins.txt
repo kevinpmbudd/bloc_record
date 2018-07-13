@@ -1,0 +1,7 @@
+SELECT d.department_name, avg(vacation_days) as average_vacation_days
+FROM professors p
+JOIN department d
+ON d.id = p.department_id
+JOIN compensation c
+ON c.professor_id = p.id
+GROUP BY d.id;
