@@ -21,7 +21,7 @@ module Selection
   end
 
   def find_one(id)
-    unless id.is_a? Integer && id >= 0
+    unless id.is_a?(Integer) && id >= 1
       raise ArgumentError.new('Invalid ID.')
     end
 
@@ -222,10 +222,10 @@ module Selection
   end
 
   def init_object_from_row(row)
-      if row
-        data = Hash[columns.zip(row)]
-        new(data)
-      end
+    if row
+      data = Hash[columns.zip(row)]
+      new(data)
+    end
   end
 
   def rows_to_array(rows)

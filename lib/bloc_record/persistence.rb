@@ -37,6 +37,17 @@ module Persistence
     self.class.update(self.id, updates)
   end
 
+  def update_multiple(ids, values)
+    ids.each_with_index do |id, index|
+      self.class.update(id, values[index])
+    end
+  end
+
+  def method_missing(m, *args, &block)
+    attribute = m.to_s.sub('update_attribute', '').to_sym
+    update_attribute(attribute, *args[0])
+  end
+
   module ClassMethods
     def create(attrs)
       attrs = BlocRecord::Utility.convert_keys(attrs)
