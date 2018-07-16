@@ -48,8 +48,8 @@ module Persistence
   end
 
   def method_missing(m, *args, &block)
-    attribute = m.to_s.sub('update_attribute', '').to_sym
-    update_attribute(attribute, *args[0])
+    attribute = m.to_s.sub('update_', '').to_sym
+    update_attribute(attribute, args[0])
   end
 
   module ClassMethods

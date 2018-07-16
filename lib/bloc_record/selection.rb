@@ -3,7 +3,7 @@ require 'sqlite3'
 module Selection
   def find(*ids)
     ids.each do |id|
-      unless id.is_a? Integer && id >= 0
+      unless id.is_a?(Integer) && id >= 0
         raise ArgumentError.new('Invalid ID.')
       end
     end
@@ -21,7 +21,7 @@ module Selection
   end
 
   def find_one(id)
-    unless id.is_a?(Integer) && id >= 1
+    unless id.is_a?(Integer) && id >= 0
       raise ArgumentError.new('Invalid ID.')
     end
 
@@ -115,7 +115,7 @@ module Selection
 
   def method_missing(m, *args, &block)
     attribute = m.to_s.sub('find_by_', '').to_sym
-    find_by(attribute, *args[0])
+    find_by(attribute, args[0])
   end
 
   def where(*args)
